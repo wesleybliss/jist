@@ -1,5 +1,5 @@
-import { useParams } from "wouter"
-import GistView from "@/components/gist/gist-view"
+import { useParams } from 'wouter'
+import GistView from '@/components/gist/gist-view'
 
 const GistPage = () => {
     const { id } = useParams()
