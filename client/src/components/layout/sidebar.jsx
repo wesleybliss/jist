@@ -41,9 +41,9 @@ const Sidebar = () => {
                 </div>
                 <ThemeSwitcher />
             </div>
-            <div className="p-4 text-center text-muted-foreground">
+            {/* <div className="p-4 text-center text-muted-foreground">
                 <a href="/">Home</a>
-            </div>
+            </div> */}
             <ScrollArea className="flex-1">
                 <GistList search={search} />
             </ScrollArea>

@@ -4,14 +4,12 @@ import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/ca
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { format } from 'date-fns'
 import { getGists, saveGists } from '@/lib/indexedDB'
-import { useEffect, useState } from 'react'
-import { Wifi, WifiOff } from 'lucide-react'
 import { useDebugStore } from '@/lib/debug-store'
 import { fetchGists } from '@/lib/api'
 
 const GistList = ({ search }) => {
     const [, setLocation] = useLocation()
-    const [isOnline, setIsOnline] = useState(navigator.onLine)
+    
     const debugEnabled = useDebugStore(state => state.enabled)
     
     console.log('GistList', { debugEnabled })
@@ -41,18 +39,6 @@ const GistList = ({ search }) => {
         },
     })
     
-    useEffect(() => {
-        const updateOnlineStatus = () => setIsOnline(navigator.onLine)
-        
-        window.addEventListener('online', updateOnlineStatus)
-        window.addEventListener('offline', updateOnlineStatus)
-        
-        return () => {
-            window.removeEventListener('online', updateOnlineStatus)
-            window.removeEventListener('offline', updateOnlineStatus)
-        }
-    }, [])
-    
     if (isLoading) {
         return (
             <div className="p-4 space-y-4">
@@ -78,20 +64,7 @@ const GistList = ({ search }) => {
     return (
         <ScrollArea className="h-full">
             <div className="p-4">
-                <div className="flex items-center gap-2 mb-4 text-sm text-muted-foreground">
-                    {isOnline ? (
-                        <>
-                            <Wifi className="h-4 w-4" />
-                            <span>Online</span>
-                        </>
-                    ) : (
-                        <>
-                            <WifiOff className="h-4 w-4" />
-                            <span>Offline</span>
-                        </>
-                    )}
-                </div>
-                <div className="space-y-4">
+                <div className="space-y-2">
                     {filteredGists?.map(gist => console.log('gist', gist) || (
                         <Card
                             key={gist.id}
